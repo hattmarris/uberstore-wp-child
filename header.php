@@ -387,7 +387,9 @@
 </nav>
 <?php }  ?>
 <!-- End Header -->
-<?php if (is_page()) {
+<?php 
+//UberStore Function has conflicts with "shop" page as static home - recognizes 1st product as $post var
+if (is_page()) {
 		$rev_slider_alias = get_post_meta($post->ID, 'rev_slider_alias', true);
 
 		if ($rev_slider_alias) {?>
@@ -395,7 +397,16 @@
 	<?php putRevSlider($rev_slider_alias); ?>
 </div>
 <?php  }
-	}
+} 
+//Added Function to detect front page, and add home slider to make usable with shop page
+if(is_front_page()) {
+	?>
+	<div id="home-slider">
+		<?php putRevSlider("home", "homepage"); ?>
+	</div>
+	<?php
+}
+
 ?>
 <?php get_template_part('template-breadcrumbs'); ?>
 <?php } // Blank page check ?>
